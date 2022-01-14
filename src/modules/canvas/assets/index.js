@@ -1,0 +1,1 @@
+export { default as Network } from './download.png';
