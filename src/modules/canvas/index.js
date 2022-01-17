@@ -6,6 +6,7 @@ export const Canvas = () => {
   const canvasRef = useRef(null);
   const canvasRef2 = useRef(null);
   const canvasRef3 = useRef(null);
+  const canvasRef4 = useRef(null);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -20,6 +21,10 @@ export const Canvas = () => {
     const canvasPaints = canvasRef3.current;
     const ctx3 = canvasPaints.getContext("2d");
     createCanvasPainting(ctx3, canvasPaints);
+
+    const canvasCircles = canvasRef4.current;
+    const ctx4 = canvasCircles.getContext("2d");
+    createCanvasCircles(ctx4, canvasCircles);
   }, [myColor]);
 
   function createCanvasSquares(ctx1) {
@@ -99,9 +104,46 @@ export const Canvas = () => {
         canvasPaints.onmousemove = null;
       };
     };
-// console.log(inputRef.current.oninput)
+    // console.log(inputRef.current.oninput)
     inputRef.current.oninput = function (event) {
       setColor(event.target.value);
+    };
+  }
+
+  function createCanvasCircles(ctx4, canvasCircles) {
+    let pi = Math.PI;
+    //pi=180
+    // 2*pi/3 = 270
+    //2*pi =360!
+
+    // ctx.arc(where center x150, y=100, radius=75,start =0,  range=pi/2, up/down=true/false)
+    ctx4.beginPath();
+    ctx4.lineWidth = 6;
+    ctx4.strokeStyle = "red";
+    ctx4.fillStyle = "yellow";
+    ctx4.arc(150, 100, 75, 0, 2 * pi, true);
+    ctx4.stroke();
+    ctx4.fill();
+    ctx4.beginPath();
+    ctx4.lineWidth = 6;
+    ctx4.strokeStyle = "green";
+    ctx4.fillStyle = "pink";
+    ctx4.arc(270, 100, 75, 0, 2 * pi, true);
+    ctx4.stroke();
+    ctx4.fill();
+    ctx4.clearRect(0, 0, 400, 200); //remove something inside canvas
+
+    canvasCircles.onmousemove = function (event) {
+      const x = event.offsetX;
+      const y = event.offsetY;
+      //animation and the mouse remained on the edge of the order and not in the center
+      const radius = Math.pow(Math.pow(x - 200, 2) + Math.pow(y - 100, 2), 0.5);
+
+      ctx4.clearRect(0, 0, 400, 200); //remove something inside canvas
+      ctx4.beginPath();
+      ctx4.arc(200, 100, radius, 0, 2 * pi, false);
+      ctx4.stroke();
+      ctx4.fill();
     };
   }
   return (
@@ -110,6 +152,7 @@ export const Canvas = () => {
       <canvas id="c1" width="400" height="200" ref={canvasRef2}></canvas>
       <canvas id="c1" width="400" height="200" ref={canvasRef3}></canvas>
       <input type="color" id="color" ref={inputRef} />
+      <canvas id="c1" width="400" height="200" ref={canvasRef4}></canvas>
     </CanvasWrapper>
   );
 };
