@@ -7,6 +7,7 @@ export const Canvas = () => {
   const canvasRef2 = useRef(null);
   const canvasRef3 = useRef(null);
   const canvasRef4 = useRef(null);
+  const canvasRef5 = useRef(null);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -25,8 +26,16 @@ export const Canvas = () => {
     const canvasCircles = canvasRef4.current;
     const ctx4 = canvasCircles.getContext("2d");
     createCanvasCircles(ctx4, canvasCircles);
+
+  
   }, [myColor]);
 
+  useEffect(() => {
+    const canvasAnimationBg = canvasRef5.current;
+    const ctx5 = canvasAnimationBg.getContext("2d");
+    createAnimationBg(ctx5, canvasAnimationBg);
+  }, []);
+  
   function createCanvasSquares(ctx1) {
     ctx1.fillStyle = "red"; //fill with color
     // create create a rectangle
@@ -146,6 +155,71 @@ export const Canvas = () => {
       ctx4.fill();
     };
   }
+
+  function createAnimationBg(ctx5) {
+    let stepCount = 0; //in one direction
+    let direction;
+    let x = 200;
+    let y = 100;
+    let timer;
+    console.log(ctx5, "555");
+    ctx5.clearRect(0, 0, 400, 200); //remove something inside canvas
+    if (stepCount === 0) {
+      stepCount = Math.floor(15 * Math.random());
+      direction = Math.floor(8 * Math.random());
+    } else {
+      stepCount--;
+    }
+
+    switch (direction) {
+      case 0:
+        //up
+        y = y - 1;
+        break;
+
+      case 1:
+        //right
+        x = x + 1;
+        break;
+      case 2:
+        //down
+        y = y + 1;
+        break;
+      case 3:
+        //left
+        x = x - 1;
+        break;
+
+      case 4:
+        //left
+        x = x - 1;
+        break;
+      case 5:
+        //right down
+        x = x + 1;
+        y = y - 1;
+        break;
+      case 6:
+        //left down
+        x = x - 1;
+        y = y + 1;
+        break;
+      case 7:
+        //left up
+        x = x - 1;
+        y = y - 1;
+        break;
+
+      default:
+        break;
+    }
+
+    if (x < 0 || x > 400 || y < 0 || y > 200) stepCount = 0;
+    ctx5.fillRect(x - 3, y - 3, 6, 6);
+
+    timer = setTimeout(createAnimationBg, 100);
+  }
+
   return (
     <CanvasWrapper>
       <canvas id="c1" width="400" height="200" ref={canvasRef}></canvas>
@@ -153,6 +227,7 @@ export const Canvas = () => {
       <canvas id="c1" width="400" height="200" ref={canvasRef3}></canvas>
       <input type="color" id="color" ref={inputRef} />
       <canvas id="c1" width="400" height="200" ref={canvasRef4}></canvas>
+      <canvas id="c1" width="400" height="200" ref={canvasRef5}></canvas>
     </CanvasWrapper>
   );
 };
