@@ -11,8 +11,8 @@ export const CanvasWrapper = styled.div`
     margin: 40px;
   }
   #c2 {
-    width: 600px;
-    height: 600px;
+    width: 300px;
+    height: 300px;
     border: 3px solid black;
     background-size: contain;
     margin: 40px;
