@@ -29,6 +29,7 @@ export const Canvas = () => {
 
       drawField();
     };
+    
     function goLife() {
       let n = 30,
         m = 30;
@@ -78,8 +79,8 @@ export const Canvas = () => {
       drawField();
       count++;
       document.getElementById("count").innerHTML = count;
+      timer = setTimeout(startLife, 300);
     }
-    timer = setTimeout(startLife, 300);
     function fpm(i) {
       if (i == 0) return 30;
       else return i;
