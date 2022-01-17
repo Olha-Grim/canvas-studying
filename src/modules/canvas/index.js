@@ -9,6 +9,7 @@ export const Canvas = () => {
   const canvasRef4 = useRef(null);
   const canvasRef5 = useRef(null);
   const canvasRef6 = useRef(null);
+  const canvasRef7 = useRef(null);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -37,6 +38,10 @@ export const Canvas = () => {
     const canvasAnimatingSineGraph = canvasRef6.current;
     const ctx6 = canvasAnimatingSineGraph.getContext("2d");
     createAnimatingSineGraph(ctx6, canvasAnimatingSineGraph);
+
+    const canvasSpirograph = canvasRef7.current;
+    const ctx7 = canvasSpirograph.getContext("2d");
+    createSpirograph(ctx7, canvasSpirograph);
   });
 
   function createCanvasSquares(ctx1) {
@@ -160,16 +165,17 @@ export const Canvas = () => {
   }
 
   function createAnimationBg(ctx5) {
+    let stepCount = 0; //in one direction
+    let direction;
+    let x = 200;
+    let y = 100;
+    let timer;
+    ctx5.clearRect(0, 0, 400, 200);
     function drawBg() {
-      let stepCount = 0; //in one direction
-      let direction;
-      let x = 200;
-      let y = 100;
-      let timer;
-      ctx5.clearRect(0, 0, 400, 200); //remove something inside canvas
+      //remove something inside canvas
       if (stepCount === 0) {
-        stepCount = Math.floor(15 * Math.random());
-        direction = Math.floor(8 * Math.random());
+        stepCount = Math.floor(20 * Math.random());
+        direction = Math.floor(15 * Math.random());
       } else {
         stepCount--;
       }
@@ -237,11 +243,28 @@ export const Canvas = () => {
         x = x + 0.2;
       }
       x = x + 0.1;
-      ctx6.fillRect(5*x, y, 2, 2);
+      ctx6.fillRect(5 * x, y, 2, 2);
       timer = setTimeout(drawSin, 50);
     }
 
     drawSin();
+  }
+
+  function createSpirograph(ctx7) {
+    let R = 150;
+    let r = 90;
+    let d = 80;
+    let teta = 0;
+    let timer;
+    function spiro() {
+      let x = (R - r) * Math.cos(teta) + d * Math.cos(((R - r) * teta) / r);
+      let y = (R - r) * Math.sin(teta) - d * Math.sin(((R - r) * teta) / r);
+      teta = teta + 0.1;
+      ctx7.fillRect(300 + x, 300 + y, 4, 4);
+      timer = setTimeout(spiro, 50);
+    }
+
+    spiro();
   }
 
   return (
@@ -253,6 +276,7 @@ export const Canvas = () => {
       <canvas id="c1" width="400" height="200" ref={canvasRef4}></canvas>
       <canvas id="c1" width="400" height="200" ref={canvasRef5}></canvas>
       <canvas id="c1" width="400" height="200" ref={canvasRef6}></canvas>
+      <canvas id="c2" width="600" height="600" ref={canvasRef7}></canvas>
     </CanvasWrapper>
   );
 };

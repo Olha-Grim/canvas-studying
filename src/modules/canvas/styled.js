@@ -10,4 +10,11 @@ export const CanvasWrapper = styled.div`
     background-size: contain;
     margin: 40px;
   }
+  #c2 {
+    width: 600px;
+    height: 600px;
+    border: 3px solid black;
+    background-size: contain;
+    margin: 40px;
+  }
 `;
